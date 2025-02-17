@@ -21,6 +21,7 @@ ENV HOME=/root \
     DISPLAY=:0.0 \
     DISPLAY_WIDTH=1024 \
     DISPLAY_HEIGHT=768
+    URL=https://www.google.co.uk
 COPY . /app
 CMD ["/app/entrypoint.sh"]
 EXPOSE 8080
