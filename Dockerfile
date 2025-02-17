@@ -8,7 +8,7 @@ ENV HOME=/root \
     LC_ALL=C.UTF-8 \
     DISPLAY=:0.0 \
     DISPLAY_WIDTH=1920 \
-    DISPLAY_HEIGHT=1080
+    DISPLAY_HEIGHT=1080 \
     URL=https://www.google.co.uk
 
 # Install git, supervisor, VNC, & X11 packages
