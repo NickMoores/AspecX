@@ -19,6 +19,9 @@ RUN set -ex; \
       git \
       net-tools \
       novnc \
+      python3 \
+      python3-pip \
+      python3-venv \
       supervisor \
       unzip \
       x11vnc \
