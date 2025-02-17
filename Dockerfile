@@ -16,6 +16,7 @@ RUN set -ex; \
     apt-get update; \
     apt-get install -y \
       bash \
+      fonts-liberation \
       git \
       net-tools \
       novnc \
