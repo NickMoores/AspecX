@@ -1,0 +1,2 @@
+#!/command/with-contenv sh
+x11vnc -forever -shared

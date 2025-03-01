@@ -1,0 +1,2 @@
+#!/command/with-contenv sh
+/venv/bin/python /app/aspecx.py

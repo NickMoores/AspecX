@@ -1,0 +1,2 @@
+#!/command/execlineb -P
+websockify --web /usr/share/novnc/vnc.html 80 localhost:5900

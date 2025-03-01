@@ -1,5 +1,7 @@
 FROM debian:bullseye
 
+ARG S6_OVERLAY_VERSION=3.2.0.2
+
 # Setup demo environment variables
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
@@ -26,7 +28,14 @@ RUN set -ex; \
       supervisor \
       unzip \
       x11vnc \
-      xvfb
+      xvfb \
+      xz-utils
+
+# Install s6-overlay
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
+RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz /tmp
+RUN tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz
 
 RUN wget -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && apt-get update \
@@ -42,9 +51,10 @@ RUN wget -O /tmp/chromedriver_linux64.zip https://storage.googleapis.com/chrome-
 RUN  python3 -m venv /venv \
     && /venv/bin/pip install --upgrade pip \
     && /venv/bin/pip install --no-cache-dir selenium 
-    
-COPY . /app
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+COPY ./s6-rc.d /etc/s6-overlay/s6-rc.d
+COPY ./app /app
+
+ENTRYPOINT ["/init"]
 
 EXPOSE 80
