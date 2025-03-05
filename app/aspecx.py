@@ -4,7 +4,6 @@ from selenium.webdriver.chrome.options import Options
 import os
 
 options = Options()
-options.add_argument("--disable-gpu")
 options.add_argument("--kiosk")
 options.add_argument("--start-maximized")
 options.add_argument("--start-fullscreen")
