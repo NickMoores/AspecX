@@ -1,0 +1,2 @@
+#!/command/with-contenv sh
+exec pulseaudio -v --daemonize=no --system --disallow-exit --exit-idle-time=-1
