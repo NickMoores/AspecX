@@ -19,8 +19,11 @@ RUN set -ex; \
     apt-get update; \
     apt-get install -y \
       bash \
+      chromium \
+      chromium-driver \
       dbus-x11 \
       fonts-liberation \
+      fluxbox \
       net-tools \
       novnc \
       python3 \
@@ -30,7 +33,8 @@ RUN set -ex; \
       unzip \
       x11vnc \
       xvfb \
-      xz-utils
+      xz-utils \
+      && rm -rf /var/lib/apt/lists/*
 
 # Setup PulseAudio
 RUN mkdir -p /var/run/pulse /var/lib/pulse /root/.config/pulse && \
@@ -46,23 +50,15 @@ RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz /tmp
 RUN tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz
 
-RUN wget -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends /tmp/google-chrome.deb \
-    && rm /tmp/google-chrome.deb \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN wget -O /tmp/chromedriver_linux64.zip https://storage.googleapis.com/chrome-for-testing-public/133.0.6943.98/linux64/chromedriver-linux64.zip \
-    && unzip -j /tmp/chromedriver_linux64.zip -d /usr/local/bin/ \
-    && chmod +x /usr/local/bin/chromedriver \
-    && rm /tmp/chromedriver_linux64.zip
-
 RUN  python3 -m venv /venv \
     && /venv/bin/pip install --upgrade pip \
     && /venv/bin/pip install --no-cache-dir selenium 
 
 COPY ./s6-rc.d /etc/s6-overlay/s6-rc.d
+COPY ./init.d /init.d
 COPY ./app /app
+
+RUN chmod +x /init.d/pulseaudio-init.sh
 
 ENTRYPOINT ["/init"]
 

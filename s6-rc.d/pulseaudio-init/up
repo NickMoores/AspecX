@@ -1,2 +1,2 @@
 #!/command/with-contenv sh
-exec /app/pulseaudio-init.sh
+exec /init.d/pulseaudio-init.sh

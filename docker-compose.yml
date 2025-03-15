@@ -10,13 +10,14 @@ services:
     networks:
       - x11
   novnc:  
-    image: theasp/novnc:latest
+    image: aspecx:latest
     environment:
       # Adjust to your screen size
       - DISPLAY_WIDTH=1600
       - DISPLAY_HEIGHT=968
+      - URL=https://www.youtube.com/watch?v=dpSMsojQa4A
     ports:
-      - "8080:8080"
+      - "8080:80"
     networks:
       - x11
 networks:
